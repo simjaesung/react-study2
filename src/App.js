@@ -2,11 +2,14 @@ import './App.css';
 import {Container, Nav, Navbar, Row, Col} from 'react-bootstrap';
 import { useState } from 'react';
 import data from './data.js';
+import Tab from './routes/Tabs.js';
 import Detail from './routes/detail.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
+import axios from 'axios';
+
 
 function App() {
-  let [shoes] = useState(data);
+  let [shoes,setShoes] = useState(data);
   let navigate = useNavigate();
   return (
     <div className="App">
@@ -25,8 +28,8 @@ function App() {
       <Routes>
         <Route path="/" element={
           <>
-           <Container>
-            <Row>
+           <div className="container">
+            <div className="row">
               {
                 shoes.map(function(a,i){ 
                   return(
@@ -34,8 +37,22 @@ function App() {
                   )
                 })
               }
-            </Row>
-          </Container>
+            </div>
+          </div>
+          <button onClick={()=>{
+            //로딩 중 UI 띄우기
+            axios.get('https://codingapple1.github.io/shop/data3.json').then((결과)=>{
+              console.log(결과.data);
+              let copy = [...shoes, ...결과.data];
+              // for(var i = 0; i< 결과.data.length; i++){
+              //   copy.push(결과.data[i]);
+              // }
+              if(copy.length > 9) alert('더이상 상품이 없습니다.');
+              else setShoes(copy);
+              //로딩 중 UI 숨기기
+            })
+              .catch(()=>{ console.log("실패");})
+          }}>더보기</button>
           </>
         }/>
         <Route path="/detail/:id" element={<Detail shoes={shoes}/>}/>
@@ -58,13 +75,11 @@ function App() {
 
 function Shoes(props){
   return(
-    <Col>
-      <img src={"https://codingapple1.github.io/shop/shoes" +props.i+ ".jpg"}
-        style={{width:'80%'}}>
-      </img>
-      <h5 onClick={()=>{props.navigate('/detail/'+ props.a.id)}}>{props.a.title}</h5>
-      <p>{props.a.content}</p>
-    </Col>
+      <div className="col-md-4">
+        <img src={"https://codingapple1.github.io/shop/shoes"+props.i+".jpg"} width="80%" />
+        <h5 onClick={()=>{props.navigate('/detail/'+ props.a.id)}}>{props.a.title}</h5>
+        <p>{props.a.content}</p>
+      </div>
   )
 }
 

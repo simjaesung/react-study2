@@ -1,0 +1,47 @@
+import Nav from 'react-bootstrap/Nav';
+import { useState, useEffect } from 'react';
+function Tab() {
+    let [i,setI] = useState(1);
+    // useEffect(()=>{
+    //     console.log(i);
+    // },[i])
+    // console.log(i);
+  return (
+    <>
+    <div style={{margin:'50px'}}>
+        <Nav variant="underline" defaultActiveKey="link-1">
+        <Nav.Item>
+            <Nav.Link eventKey="link-1" onClick={()=>{setI(1)}}>Option 1</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+            <Nav.Link eventKey="link-2" onClick={()=>{setI(2)}}>Option 2</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+            <Nav.Link eventKey="link-3" onClick={()=>{setI(3)}}> Option 3 </Nav.Link>
+        </Nav.Item>
+        </Nav>
+        <TabDetail i = {i}/>
+    </div>
+    </>
+  );
+  
+}
+
+//if문은 바깥에서 쓸 수 있음 
+// function TabDetail(props){
+//     console.log(props.i);
+//     if(props.i == 1) {
+//         return <div>내용1</div>
+//       }
+//     if(props.i == 2){
+//         return <div>내용2</div>  
+//     }
+//     if(props.i == 3){
+//        return  <div>내용3</div> 
+//     }
+// }
+
+function TabDetail({i}){
+    return [<div>내용1</div>, <div>내용2</div>,<div>내용3</div>][i -1];
+}
+export default Tab;
