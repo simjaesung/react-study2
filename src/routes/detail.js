@@ -1,7 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Tab from './Tabs.js';
+import { useDispatch } from "react-redux";
 import styled from 'styled-components';
+import { addItem } from "../store.js";
 
 function Detail(props){
     // let [popup, setPop] = useState(1);
@@ -11,6 +13,7 @@ function Detail(props){
     let[input,setInput] = useState('');
     let [fade, setFade] = useState('');
     let [shoes,setShoes] = useState(props.shoes);
+    let dispatch = useDispatch();
     //console.log(shoes);
     //html 랜더링 후에 동작, 시간이 오래 걸리는 코드를 여기다 작성(side Effect 코드)
     useEffect(()=>{
@@ -38,7 +41,8 @@ function Detail(props){
                 <p>{shoes[id].content}</p>
                 <p>{shoes[id].price}원</p>
                 <p><input id = "input" onChange={(e)=>{setInput(e.target.value)}}></input></p>
-                <button className="btn btn-danger">주문하기</button> 
+                <button className="btn btn-danger"
+                    onClick={()=>{dispatch(addItem(shoes[id]))}}>주문하기</button> 
                 </div>
             </div>
         </div> 

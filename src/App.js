@@ -3,7 +3,7 @@ import {Container, Nav, Navbar, Row, Col, Spinner} from 'react-bootstrap';
 import { useState } from 'react';
 import data from './data.js';
 import Shoes from './routes/Shoes.js';
-import Tab from './routes/Tabs.js';
+import Cart from './routes/Cart.js';
 import Detail from './routes/Detail.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import axios from 'axios';
@@ -23,7 +23,7 @@ function App() {
           </Navbar.Brand>
           <Nav>
             <Nav.Link onClick={()=>navigate('/')}>Home</Nav.Link>
-            <Nav.Link onClick={()=>navigate('/detail')}>Cart</Nav.Link>
+            <Nav.Link onClick={()=>navigate('/cart')}>Cart</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -60,6 +60,7 @@ function App() {
           </>
         }/>
         <Route path="/detail/:id" element={<Detail shoes={shoes}/>}/>
+        <Route path="/cart" element={<Cart/>}/>
         <Route path="/about" element={<About/>}>
           <Route path="member" element ={<div>멤버페이지</div>}/>
           <Route path="location" element={<div>지역페이지</div>}/>
